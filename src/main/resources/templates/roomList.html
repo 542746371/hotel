@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>预定房间</title>
+<script type="text/javascript">
+    function del() {
+        var msg = "您真的确定要删除吗？\n\n请确认！";
+        if (confirm(msg)==true){
+            // alert('去删除');
+            return true;
+        }else{
+            // alert('取消删除');
+            return false;
+        }
+    };
+</script>
+</head>
+<body>
+<section onload="randoms()">
+    <!-- 背景颜色 -->
+    <div class="color"></div>
+    <div class="color"></div>
+    <div class="color"></div>
+    <div class="box">
+        <!-- 背景圆 -->
+        <div class="circle" style="--x:0"></div>
+        <div class="circle" style="--x:1"></div>
+        <div class="circle" style="--x:2"></div>
+        <div class="circle" style="--x:3"></div>
+        <div class="circle" style="--x:4"></div>
+        <div class="RoomList">
+
+
+            <form id = "selectedrooms" action="/order/info" method="post" name = "form1">
+                <!-- Main Container -->
+                <div>
+                    <!-- Navigation -->
+
+                    <h2 style="text-align: center;
+                        position: relative;
+                        color: #00aaff;
+                        font-size: 24px;
+                        font-weight: 600;
+                        letter-spacing: 5px;
+                        margin-bottom: 30px;
+                        cursor: pointer;">大理海湾</h2>
+                    <div style="display: inline-block">
+                        <img src="/images/jiudian.jpg" style="width: 180px "height="180px">
+                    </div>
+
+                    <div style="white-space: nowrap ;display: inline-block ;width: 50%;text-align: center;padding-top: 30px;float: left;">
+                        <p>预定价格：</p>
+                        <P>开业事件：</P>
+                        <P>周边环境：</P>
+                        <P>酒店地址：</P>
+                        <P>酒店数量：</P>
+                    </div>
+                </div>
+
+                <table width="690" border="0" cellspacing="0" cellpadding="0" style=" overflow:hidden;"bgcolor="#4169e1">
+                    <tr  onmousemove="javascript:this.bgColor='#4169e1';" onmouseout="javascript:this.bgColor='#4169e1';" bgcolor="#4169e1">
+                        <td width="150" valign="top" colspan="2" style="cursor:pointer"> &nbsp;&nbsp;<strong>房名&nbsp;&nbsp;&nbsp; </strong> </td>
+                        <td valign="top">早餐</td>
+                        <td valign="top">床型 </td>
+                        <td valign="top">WIFI  </td>
+                        <td valign="top"><em style="text-decoration: line-through;">原价 </em></td>
+                        <td valign="top"><em>折扣价 </em></td>
+                        <td valign="top" >是否订购</td>
+                    </tr>
+
+
+
+                 <tr id="vl_t" th:each="room:${roomList}" onmousemove="javascript:this.bgColor='#f0f8ff';" onmouseout="javascript:this.bgColor='#87cefa';" bgcolor="#87cefa">
+                    <td th:text="${room.getName()}" width="150" valign="top" colspan="2" style="cursor:pointer"> &nbsp;&nbsp;<strong><% out.print(room.getName()); %> </strong> </td>
+                    <td th:text="${room.getFood()}" valign="top"><%out.print(room.getFood()); %> </td>
+                    <td th:text="${room.getBed()}" valign="top"><%out.print(room.getBed()); %> </td>
+                    <td th:text="${room.getWifi()}" valign="top"><%out.print(room.getWifi()); %> </td>
+                    <td th:text="${room.getPrice()}" valign="top"><em style="text-decoration: line-through;"><%out.print(room.getPrice());%> </em></td>
+                    <td th:text="${room.getSubprice()}" valign="top"><em><%out.print(room.getSubprice());%> </em></td>
+                    <td  valign="top" align="center">
+                        <input name="rooms" type="checkbox" id="arcID"  th:value="${room.getId()}" class="np">
+                    </td>
+                     <td th:if="${session.user.getType().equals('企业')}">
+
+                                <a th:href="@{'/room/deleteRoom/roomId=' + ${room.getId()}}"
+                                   onclick="javascript:return del();">删除</a>
+                                <a th:href="@{'/room/updateRoom/roomId=' + ${room.getId()}}">修改</a>
+                     </td>
+
+
+
+
+                </tr>
+
+                </table>
+                <div align="center"  class="inputBox" >
+                    <input type="submit" value="提交" id="input" style="padding: 10px 20px;
+                                                background: #fff;
+                                                max-width: 100px;
+                                                font-weight: 600;
+                                                border-radius: 30px;
+                                                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                                                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
+                    <a th:if="${session.user.getType().equals('企业')}" th:href="@{/room/addRoom}"><input type="button" value="新增"
+                                                style="padding: 10px 20px;
+                                                background: #fff;
+                                                max-width: 100px;
+                                                font-weight: 600;
+                                                border-radius: 30px;
+                                                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                                                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);"
+                    /></a>
+                </div>
+
+            </form>
+
+</section>
+</body>
+</html>

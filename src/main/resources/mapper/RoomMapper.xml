@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.dali.hotel.dao.RoomMapper">
+<!--   resultMap： 类和表之间的映射-->
+    <resultMap id="roomRap" type="edu.dali.hotel.model.Room">
+<!--      column:表里的名字    property：类里的名字  -->
+        <id column="id" property="id" jdbcType="VARCHAR"></id>
+        <result column="name" property="name" jdbcType="VARCHAR"></result>
+        <result column="food" property="food" jdbcType="VARCHAR"></result>
+        <result column="bed" property="bed" jdbcType="VARCHAR"></result>
+        <result column="wifi" property="wifi" jdbcType="VARCHAR"></result>
+        <result column="price" property="price" jdbcType="VARCHAR"></result>
+        <result column="subprice" property="subprice" jdbcType="VARCHAR"></result>
+
+    </resultMap>
+
+    <!--    使用了配置文件的别名-->
+    <select id="getAllRoom"  resultMap="roomRap">
+        select * from t_room;
+    </select>
+
+    <select id="getRoomById"  resultMap="roomRap">
+        select * from t_room where
+        <trim suffixOverrides="and">
+            <if test="id != '' and id!=null">id = #{id} and</if>
+        </trim>
+    </select>
+
+
+    <update id="updateRoom" parameterType="edu.dali.hotel.model.Room">
+        update  hotel.t_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="food != null">food = #{food},</if>
+            <if test="bed != null">bed = #{bed},</if>
+            <if test="wifi != null">wifi = #{wifi},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="subprice != null">subprice = #{subprice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <delete id="deleteRoomById" parameterType="java.lang.Integer">
+        delete from hotel.t_room where id = #{id}
+    </delete>
+
+
+    <insert id="addRoom" parameterType="edu.dali.hotel.model.Room" useGeneratedKeys="true" keyProperty="id">
+        insert into hotel.t_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="food != null">food,</if>
+            <if test="bed != null">bed,</if>
+            <if test="wifi != null">wifi,</if>
+            <if test="price != null">price,</if>
+            <if test="subprice != null">subprice,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="food != null">#{food},</if>
+            <if test="bed != null">#{bed},</if>
+            <if test="wifi != null">#{wifi},</if>
+            <if test="price != null">#{price},</if>
+            <if test="subprice != null">#{subprice},</if>
+        </trim>
+    </insert>
+
+</mapper> 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--MyBatis核心配置文件中，标签的顺序： properties?,settings?,typeAliases?,
+        typeHandlers?, objectFactory?,objectWrapperFactory?,reflectorFactory?,
+         plugins?,environments?,databaseIdProvider?,mappers? -->
+<configuration>
+    <!--设置连接数据库的环境-->
+    <!--    引入jdbc文件,-->
+    <properties resource="jdbc.properties"/>
+
+    <typeAliases>
+        <package name="org.z360.mabatis.pojo"/>
+        <!--        这是整个包取名，下面的是单个来-->
+        <!--        <typeAlias type="org.z360.mabatis.pojo.user.User" alias="使用"></typeAlias>-->
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--        引入文件前：
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm?serverTimezone=UTC"/>
+                <property name="username" value="root"/>
+                <property name="password" value="951753"/>-->
+                <!--                引入文件后-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--引入映射文件-->
+    <mappers>
+        <!--        <mapper resource="mappers/UserMapper.xml"/>-->
+        <package name=""/><!-- 这个需要他们在同一个包，此处创建时不能为.,而是/-->
+    </mappers>
+</configuration>

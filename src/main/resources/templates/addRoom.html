@@ -1,0 +1,40 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>添加房间</title>
+
+</head>
+<body>
+<section onload="randoms()">
+    <!-- 背景颜色 -->
+    <div class="color"></div>
+    <div class="color"></div>
+    <div class="color"></div>
+    <div class="box">
+        <!-- 背景圆 -->
+        <div class="circle" style="--x:0"></div>
+        <div class="circle" style="--x:1"></div>
+        <div class="circle" style="--x:2"></div>
+        <div class="circle" style="--x:3"></div>
+        <div class="circle" style="--x:4"></div>
+        <div class="RoomList">
+
+            <form th:action="@{/room/addRoomAfter}" method="post">
+                <table>
+                    <td>房间名称 : <input type="text" name="name"></td>
+                    <td>房间早餐 : <input type="text" name="food"><td>
+                    <td>房间床型 : <input type="text" name="bed"><td>
+                    <td>房间WIFI : <input type="text" name="wifi"><td>
+                    <td>房间原价 : <input type="text" name="price"><td>
+                    <td>房间折扣价 : <input type="text" name="subprice"><td>
+                    <td><input type="submit" value="添加房间信息"><td>
+
+                </table>
+            </form>
+
+</section>
+</body>
+</html>

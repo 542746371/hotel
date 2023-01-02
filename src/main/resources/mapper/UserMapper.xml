@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper是根标签。namespace属性是找到当前配置的依据 -->
+<!-- 由于最理想的Mybatis使用方式是：通过Mapper接口调用接口方法，访问数据库 -->
+<!-- 这样的理想方式要求：能够通过接口全类名找到Mapper配置 -->
+<!-- 所以：我们就用Mapper接口的全类名来给namespace属性赋值 -->
+<mapper namespace="edu.dali.hotel.dao.UserMapper">
+    <resultMap id="userRap" type="edu.dali.hotel.model.User">
+        <id column="id" property="id" jdbcType="VARCHAR"></id>
+        <result column="name" property="name" jdbcType="VARCHAR"></result>
+        <result column="password" property="password" jdbcType="VARCHAR"></result>
+        <result column="sex" property="sex" jdbcType="VARCHAR"></result>
+        <result column="where" property="where" jdbcType="VARCHAR"></result>
+        <result column="Type" property="Type" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+<!--    prefix：在trim标签中的内容的前面添加某些内容-->
+<!--    prefixOverrides：在trim标签中的内容的前面去掉某些内容-->
+<!--    suffix：在trim标签中的内容的后面添加某些内容-->
+<!--    suffixOverrides：在trim标签中的内容的后面去掉某些内容-->
+
+    <select id="getUserById" resultMap="userRap">
+        select * from t_user where
+        <trim suffixOverrides="and">
+            <if test="id != '' and id!=null">id = #{id} and</if>
+            <if test="password != '' and password!=null">password = #{password} and</if>
+        </trim>
+    </select>
+
+
+<!--    t_user.`where`-->
+    <insert id="insertUser" parameterType="edu.dali.hotel.model.User" >
+        insert into hotel.t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="password != null">password,</if>
+            <if test="sex != null">sex,</if>
+            <if test="where != null">t_user.where,</if>
+            <if test="Type != null">Type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="password != null">#{password},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="where != null">#{where},</if>
+            <if test="Type != null">#{Type},</if>
+        </trim>
+    </insert>
+
+</mapper> 
